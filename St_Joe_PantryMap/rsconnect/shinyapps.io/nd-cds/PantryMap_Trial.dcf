@@ -1,0 +1,10 @@
+name: PantryMap_Trial
+title: PantryMap_Trial
+username:
+account: nd-cds
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 2121591
+bundleId: 3306326
+url: https://nd-cds.shinyapps.io/PantryMap_Trial/
+when: 1592916682.1757

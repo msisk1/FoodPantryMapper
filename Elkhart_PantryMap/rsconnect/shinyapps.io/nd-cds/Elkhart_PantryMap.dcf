@@ -1,0 +1,12 @@
+name: Elkhart_PantryMap
+title: Elkhart_PantryMap
+username:
+account: nd-cds
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 2506794
+bundleId: 3319110
+url: https://nd-cds.shinyapps.io/Elkhart_PantryMap/
+when: 1593170618.28443
+asMultiple: FALSE
+asStatic: FALSE
