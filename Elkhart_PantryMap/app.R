@@ -1,4 +1,4 @@
-
+#ELKHART!!!!
 
 library(shiny)
 library(leaflet)
@@ -56,9 +56,11 @@ list.categories <- c("Dairy" ="Dairy",
                      "Bread" ="Bread",
                      "Meat (Frozen)"="Meat (Frozen)",
                      "Meat (Canned)"="Meat/Other Protein (Canned)",
-                     "Vegetables/Fruits (Canned)"="Vegetables/Fruits (Canned)",
+                     "Vegetables/Fruits"="Vegetables/Fruits",
                      "Personal Care"="Personal and Household Care Items",
                      "Numeric Summaries" ="Numeric Summary", 
+                     "Beans" ="Beans",
+                     "Tomato Products" = "Tomato Products",
                      "Storage"="Estimated levels of storage space available", 
                      "Notes" = "Notes (if needed)"  )
 
@@ -206,6 +208,8 @@ server <- function(input, output) {
     })# end output$mymAP
     output$tableView <- DT::renderDataTable({
       each <- form.responces %>% filter(`Pantry Name:` == input$report.pantry)%>%
+        # each <- form.responces %>% filter(`Pantry Name:` == "Family Christian Development Center")%>%
+        
         mutate_at(vars(4:8), 
                   funs(as.character))%>%
         select(-Timestamp, -avFood,-avDairy, -avStock, -avFreeze, -avFridge)%>%

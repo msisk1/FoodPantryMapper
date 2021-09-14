@@ -1,4 +1,4 @@
-
+#ST JOE!!!!
 
 library(shiny)
 library(leaflet)
@@ -69,7 +69,7 @@ week.selected <- max(unique(form.responces %>%group_by(`Week ending:`) %>% summa
 
 
 # Define UI for application that draws a histogram
-ui <- navbarPage("Pantry Explorer v2", theme = shinytheme("yeti"),
+ui <- navbarPage("Pantry Explorer v2", theme = shinytheme("yeti"), id = "navpanel",
     tabPanel("Map",
             sidebarLayout(
                 sidebarPanel(
@@ -101,7 +101,7 @@ ui <- navbarPage("Pantry Explorer v2", theme = shinytheme("yeti"),
                 )#end MainPanel
             )#endSideBar
     ),#end Tab Panel MAP
-    tabPanel("Individual Reports",
+    tabPanel("Individual Reports", value = "IndReport",
              sidebarLayout(
                  sidebarPanel(
                     selectInput(inputId = "report.pantry",
@@ -121,7 +121,7 @@ ui <- navbarPage("Pantry Explorer v2", theme = shinytheme("yeti"),
              )#endSideBar
              
      ),#end tabpabel Individual Reports
-    tabPanel("Time Series",
+    tabPanel(title = "Time Series", value = "TimeSeries",
              sidebarLayout(
                  sidebarPanel(
                      selectInput(inputId = "plot.variable",
@@ -142,7 +142,8 @@ ui <- navbarPage("Pantry Explorer v2", theme = shinytheme("yeti"),
 )# end NavBarPage
 
 # Define server logic required to draw a histogram
-server <- function(input, output) {
+server <- function(input, output,session) {
+
     addLegendCustom <- function(map, colors, labels, sizes, opacity = 0.5, leg.title){
         colorAdditions <- paste0(colors, "; width:", sizes, "px; height:", sizes, "px")
         labelAdditions <- paste0("<div style='display: inline-block;height: ", sizes, "px;margin-top: 4px;line-height: ", sizes, "px;'>", labels, "</div>")
@@ -293,6 +294,22 @@ server <- function(input, output) {
         ggplotly(plot) %>%
           layout(legend = list(orientation = "h", x = 0.4, y = -0.4))
     })#end output$timePlot
+    observe({
+      query <- parseQueryString(session$clientData$url_search)
+      print(query)
+      if (!is.null(query[['display']])) {
+        # updateSliderInput(session, "bins", value = query[['bins']])
+        #      selectInput("toDisplay","Display",c("Enslavers","LocationAccuracy"), selected = "Enslavers"),
+        if(query$display=="TimeSeries"){
+          print(query$display)
+          updateTabsetPanel(session, "navpanel",selected = query$display )
+          # updateSelectInput(session, inputId = "toDisplay",selected = "LocationAccuracy")
+        }# end if time series
+        
+      }#end testing null
+      
+    })# end observe 
+    
 }#end server
 
 # Run the application 

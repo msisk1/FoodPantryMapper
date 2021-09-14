@@ -5,8 +5,6 @@ account: nd-cds
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 2506794
-bundleId: 3319110
+bundleId: 3842907
 url: https://nd-cds.shinyapps.io/Elkhart_PantryMap/
-when: 1593170618.28443
-asMultiple: FALSE
-asStatic: FALSE
+when: 1605016284.4436

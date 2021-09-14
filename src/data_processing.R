@@ -33,6 +33,9 @@ tab.values <- function(df, starts.with){
 
 setwd("C:\\Users\\msisk1\\Documents\\Rprojs\\FoodPantryMapper") #only necessary for command line running
 
+
+#St Joe
+print("Processing Saint Joe")
 load(file = "St_Joe_PantryMap/allData.RData")
 
 old.length <- nrow(form.responces)
@@ -42,11 +45,12 @@ remove(form.responces)
 
 latlong <- 4326
 
-sheet.gid.sj <- "1XE6yGgP_t7D5iAPC3vjJhTPZgjw5umAmeqy2k3sCYsI"
+# sheet.gid.sj <- "1XE6yGgP_t7D5iAPC3vjJhTPZgjw5umAmeqy2k3sCYsI" #This was an old one
+sheet.gid.sj <- "17kB1nX-ZQS5VN111ekd9dD87qJNyWnwISYwywCier9M"
 sheet.gid.elk <- "1rRGbtQdfga8iXiJiM4YlMWxAF9BCBTI2bphrKk5k-Bo"
 
 #st.joe section
-form.responces <- read_sheet(sheet.gid.sj, sheet = "Form Responses 1")
+form.responces <- read_sheet(sheet.gid.sj, sheet = "Form Responses 3")
 1
 locations <- read_sheet(sheet.gid.sj, sheet = "Locations/Hours")
 #converting locations into spatial data
@@ -61,10 +65,11 @@ form.responces <- form.responces %>%
   summarise_all(last)%>%
   ungroup()
 
+print (paste0("Missing: ", unique(form.responces$`Pantry Name:`)[!unique(form.responces$`Pantry Name:`) %in% locations$FormName]))
 
 
 if (old.length == nrow(form.responces)){
-  print("No new responces, not updating")
+  print("No new responses, not updating")
 }else{
   print(paste((nrow(form.responces) - old.length), "new responces, updating the app"))
   
@@ -131,20 +136,28 @@ if (old.length == nrow(form.responces)){
   
   form.responces$`Number of families served this week:` <- as.integer(form.responces$`Number of families served this week:` )
   
-  save(form.responces,locations,file = "PantryMap_Trial/allData.RData")
+  save(form.responces,locations,file = "St_Joe_PantryMap/allData.RData")
   
   library(shiny)
   library(rsconnect)
-  deployApp("PantryMap_Trial", forceUpdate = TRUE)
+  deployApp("St_Joe_PantryMap", forceUpdate = TRUE)
   
   
   
     
-}#end else no new responces
+}#end else no new responses
 
 
 
 #elkhart section:
+print("Processing Elkhart")
+
+load(file = "Elkhart_PantryMap/allData.RData")
+
+old.length.elk <- nrow(form.responces.elk)
+remove(locations.elk)
+remove(form.responces.elk)
+
 
 form.responces.elk <- read_sheet(sheet.gid.elk, sheet = "Form Responses 1")
 1
@@ -161,12 +174,13 @@ form.responces.elk <- form.responces.elk %>%
   summarise_all(last)%>%
   ungroup()
 
+print (paste0("Missing: ", unique(form.responces.elk$`Pantry Name:`)[!unique(form.responces.elk$`Pantry Name:`) %in% locations.elk$FormName]))
 
 
-if (old.length == nrow(form.responces.elk)){
-  print("No new responces, not updating")
+if (old.length.elk == nrow(form.responces.elk)){
+  print("No new responses, not updating")
 }else{
-  print(paste((nrow(form.responces.elk) - old.length), "new responces, updating the app"))
+  print(paste((nrow(form.responces.elk) - old.length.elk), "new responces, updating the app"))
   
   form.responces.elk$`Week ending:` <- as.Date(form.responces.elk$`Week ending:`, format = "%m/%d/%Y")
   
@@ -210,7 +224,13 @@ if (old.length == nrow(form.responces.elk)){
            "Meat/Other Protein (Canned) [Other - Peanut Butter, soups]"        ,
            "Vegetables/Fruits  [Vegetables (canned)]"                    ,
            "Vegetables/Fruits  [Fruit (canned)]"  ,
-           # "Vegetables/Fruits (Canned) [Juice]"   ,                     
+           "Vegetables/Fruits  [Vegetables (fresh)]"                   ,                                                                                                                              
+           "Vegetables/Fruits  [Fruit (fresh)]"                         ,     
+           "Beans [Dry]"                                       ,                                                                                                                                      
+           "Beans [Canned]"                                    ,                                                                                                                                      
+           "Tomato Products [Tomatoes/tomato paste (canned)]"  ,                                                                                                                                      
+           "Tomato Products [Pasta sauces]"                     ,                                                                                                                                     
+           "Tomato Products [Pasta products (Ravioli, Spaghetti Os, etc)]"  ,  
            "Personal and Household Care Items [Deodorant]" ,             
            "Personal and Household Care Items [Feminine products]"      ,
            "Personal and Household Care Items [Soap/hand soap]"         ,
@@ -232,9 +252,9 @@ if (old.length == nrow(form.responces.elk)){
   form.responces.elk$`Number of families served this week:` <- as.integer(form.responces.elk$`Number of families served this week:` )
   save(form.responces.elk,locations.elk,file = "Elkhart_PantryMap/allData.RData")
   
-  # library(shiny)
-  # library(rsconnect)
-  # deployApp("Elkahrt_PantryMap", forceUpdate = TRUE)
+  library(shiny)
+  library(rsconnect)
+  deployApp("Elkhart_PantryMap/", forceUpdate = TRUE)
   
   
   
