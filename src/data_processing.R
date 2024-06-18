@@ -51,7 +51,7 @@ sheet.gid.elk <- "1rRGbtQdfga8iXiJiM4YlMWxAF9BCBTI2bphrKk5k-Bo"
 
 #st.joe section
 form.responces <- read_sheet(sheet.gid.sj, sheet = "Form Responses 3")
-1
+2
 locations <- read_sheet(sheet.gid.sj, sheet = "Locations/Hours")
 #converting locations into spatial data
 locations <- locations%>%

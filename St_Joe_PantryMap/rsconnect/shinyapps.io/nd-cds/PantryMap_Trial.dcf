@@ -5,7 +5,5 @@ account: nd-cds
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 2121591
-bundleId: 5032558
+bundleId: 8758319
 url: https://nd-cds.shinyapps.io/PantryMap_Trial/
-when: 1631635979.69423
-lastSyncTime: 1631635979.69423

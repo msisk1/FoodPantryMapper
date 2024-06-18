@@ -184,7 +184,7 @@ server <- function(input, output,session) {
         size.lab <- names(map.size.choices)[map.size.choices == input$map.size.variable]
         
         leaflet()%>%
-            addProviderTiles(provider = providers$Stamen.TonerLite)%>%
+            addProviderTiles(provider = providers$Esri.WorldGrayCanvas)%>%
             addCircleMarkers(data = active.summary(),
                              fillColor = ~pal(get(input$map.color.variable)),
                              stroke = 0,
